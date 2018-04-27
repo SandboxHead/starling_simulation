@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f21ec3f2-5bd4-475a-bb4b-1a46685c50ef" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/Starling Flock Simulation Mathematical model.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/try1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/try1.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -14,17 +12,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="try1.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/try1.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -63,6 +51,11 @@
               <item name="starling_simulation" type="b2602c69:ProjectViewProjectNode" />
               <item name="starling_simulation" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="starling_simulation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="starling_simulation" type="462c0819:PsiDirectoryNode" />
+              <item name="docs" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -75,6 +68,11 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../starling_project_try" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\mader\PycharmProjects\starling_simulation\docs" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
