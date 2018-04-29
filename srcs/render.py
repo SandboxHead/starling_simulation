@@ -25,7 +25,7 @@ class Model:
 			c1, c2, c3 = boid.color
 			color = ('c3f', (c1, c2, c3)*3)
 			self.vels.append(boid.velocity)
-			self.objs.append(self.batch.add(3, GL_TRIANGLES, None, ('v3f', (x,y,z, x+1,y,z, x+0.5, y+1,z,)), color))
+			self.objs.append(self.batch.add(3, GL_TRIANGLES, None, ('v3f', (x+0.5,y,z, x-0.5,y,z, x, y,z-1,)), color))
 
 
 		# boid = Boid()
@@ -36,15 +36,11 @@ class Model:
 		# self.faces = []
 		# self.faces.append(self.batch.add(3, GL_TRIANGLES, None, ('v3f', (x,y,z, x+1,y,z, x+0.5, y+1,z, )), color))
 
-	def draw(self):
+	def draw(self, pos):
 		for num in range(len(self.objs)):
 			obj = self.objs[num]
-			vel = self.vels[num]
-			for index in range(3):
-				# print(obj.vertices[index])
-				obj.vertices[index*3+2] = obj.vertices[index*3+2] +vel[2]
-				obj.vertices[index*3+1] = obj.vertices[index*3+1] +vel[1]
-				obj.vertices[index*3] = obj.vertices[index*3] +vel[0]
+			x, y, z = pos[num]
+			obj.vertices = [x+0.5,y,z, x-0.5,y,z, x, y,z-1]
 				
 		self.batch.draw()
 
@@ -58,10 +54,10 @@ class Player:
 		dy/=8
 		self.rot[0]+=dy
 		self.rot[1]-=dx
-		if self.rot[0]>90 : self.rot[0] = 90
-		if self.rot[0]<-90 : self.rot[0] = -90
-		if self.rot[1]>90 : self.rot[1] = 90
-		if self.rot[1]<-90 : self.rot[1] = -90
+		# if self.rot[0]>90 : self.rot[0] = 90
+		# if self.rot[0]<-90 : self.rot[0] = -90
+		# if self.rot[1]>90 : self.rot[1] = 90
+		# if self.rot[1]<-90 : self.rot[1] = -90
 
 	def update(self, dt, keys):
 		s = dt*10
@@ -110,8 +106,8 @@ class Window(pyglet.window.Window):
 
 	def create_boid(self,length, width, height):
 		return Boid(position=[random.uniform(-length, length),random.uniform(-width, width),random.uniform(-height-10, 0)],
-					velocity=[random.uniform(-0.02,0.02),random.uniform(-0.02,0.02),random.uniform(-0.02,0.02)],
-					color=[random.random(), random.random(), random.random()])
+					velocity=[random.uniform(-0.05,0.05),random.uniform(-0.05,0.05),random.uniform(-0.05,0.05)],
+					color=[1,1,1])
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
@@ -120,8 +116,8 @@ class Window(pyglet.window.Window):
 		self.push_handlers(self.keys)
 		pyglet.clock.schedule(self.update)
 		self.boids = []
-		for n in range(10):
-			self.boids.append(self.create_boid(1,1,1))
+		for n in range(3000):
+			self.boids.append(self.create_boid(5,5,5))
 		self.model = Model(self.boids)
 		self.player = Player()
 	def on_draw(self):
@@ -129,7 +125,10 @@ class Window(pyglet.window.Window):
 		self.clear()
 		self.push(self.player.pos, self.player.rot)	
 		x,y,z = self.player.pos
-		self.model.draw()
+		for boid in self.boids:
+			boid.update(1, self.boids, [], [])
+		upd = [x.position for x in self.boids]
+		self.model.draw(upd)
 		glPopMatrix()
 
 if __name__ == '__main__':

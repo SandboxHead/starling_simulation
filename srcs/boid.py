@@ -31,13 +31,16 @@ class Boid:
 				neighbours=[],
 				group_average_velocity=[0.0,0.0,0.0],
 				group_centre=[0.0,0.0,0.0],
-				obj_nearby=[]):
-
+				obj_nearby=[],
+				size = [10,7,7]):
+			self.size = size
 			self.position = position
-
+			self.neighbours = neighbours
 			self.velocity = velocity
 			self.color = color
 			self.force_factors = []
+
+			self.obj_nearby = obj_nearby
 
 	def __repr__(self):
 		return "Boid: position={}, velocity={}, color={}".format(
@@ -71,7 +74,7 @@ class Boid:
 						vector.magnitude(*diff) <= _RANGE_OF_BOID and 
 						vector.angle_between(self.velocity, diff) <= _VIEW_ANGLE):
 					(self.neighbours).append(boid)
-			return
+			
 
 
 	def average_position(self):
@@ -82,11 +85,10 @@ class Boid:
 				sum_y += boid.position[1]
 				sum_z += boid.position[2]
 			average_x, average_y, average_z = (sum_x/len(self.neighbours), sum_y/len(self.neighbours), sum_z/len(self.neighbours))
-			self.group_centre = [average_x-self.position[0], average_y-self.position[1], average_z-self.position[2]]
-			return
+			group_centre = [average_x-self.position[0], average_y-self.position[1], average_z-self.position[2]]
+			return group_centre
 		else:
-			self.group_centre = [0.0, 0.0, 0.0]
-			return
+			return [0.0, 0.0, 0.0]
 
 	def average_velocity(self):
 		if len(self.neighbours) >0:
@@ -97,25 +99,24 @@ class Boid:
 				sum_z += boid.velocity[2]
 
 			average_x, average_y, average_z = (sum_x/len(self.neighbours), sum_y/len(self.neighbours), sum_z/len(self.neighbours))
-			self.group_average_velocity = [average_x-self.position[0], average_y-self.position[1], average_z-self.position[2]]
-			return		
+			return [average_x-self.position[0], average_y-self.position[1], average_z-self.position[2]]		
 		else:
-			self.group_average_velocity = [0.0, 0.0, 0.0]
-			return
+			return [0.0, 0.0, 0.0]
+		
 
 	def nearby_obj(self, objs, _MIN_OBSTACLE_DISTANCE):
-		self.nearby_obj = (
+		self.obj_nearby = [
 			obj for obj in objs
 			if ( vector.magnitude(obj.position[0] - self.position[0],
 									obj.position[1] - self.position[1],
-									obj.position[2] - self.position[2]) <= _MIN_OBSTACLE_DISTANCE))
-		return
+									obj.position[2] - self.position[2]) <= _MIN_OBSTACLE_DISTANCE)]
+
 
 	def avoid_collisions(self, objs, collision_distance):
 		c = [0.0, 0.0, 0.0]
 		for obj in objs:
 			diff = obj.position[0] - self.position[0], obj.position[1] - self.position[1], obj.position[2] - self.position[2]
-			inv_sqr_magnitude = 1/((vector.magnitude(*diff)- self.size)**2)
+			inv_sqr_magnitude = 1/((vector.magnitude(*diff)- self.size[0])**2)
 
 			c[0] = c[0] - inv_sqr_magnitude*diff[0]
 			c[1] = c[1] - inv_sqr_magnitude*diff[1]
@@ -142,31 +143,32 @@ class Boid:
 		self.determine_nearby_boids(all_boids)
 
 		# obstacles = self.nearby_obj(objs, _MIN_OBSTACLE_DISTANCE)
-
+		self.nearby_obj(obstacles, _MIN_OBSTACLE_DISTANCE)
 		#initializing all the change vectors
 		cohesion_factor = self.average_position(),
 		alignment_factor = self.average_velocity(),
 		seperation_factor = self.avoid_collisions(self.neighbours, _BOID_COLLISION_DISTANCE),
-		collision_factor = self.avoid_collisions(obstacles, _MIN_OBSTACLE_DISTANCE)
-		attraction_factor = self.attraction(attractors)
+		# collision_factor = self.avoid_collisions(self.obj_nearby, _MIN_OBSTACLE_DISTANCE)
+		# attraction_factor = self.attraction(attractors)
 
 		self.force_factors = [
-			(_FACTOR_COHESION, cohesion_factor),
+			(_FACTOR_COHESION, cohesion_factor)
 			(_FACTOR_ALIGNMENT, alignment_factor),
-			(_FACTOR_BOID_AVOIDANCE, seperation_factor),
+			(_FACTOR_BOID_AVOIDANCE, seperation_factor)
 			(_FACTOR_OBSTACLE_AVOID, collision_factor),
-			(_FACTOR_ATTRACT, attraction_factor)]
+			# (_FACTOR_ATTRACT, attraction_factor)]
+			]
 
-		for factor, effect in self.force_factors:
-			self.velocity[0] += factor*effect[0]
-			self.velocity[1] += factor*effect[1]
-			self.velocity[2] += factor*effect[2]
+		# for factor, effect in self.force_factors:
+		# 	self.velocity[0] += factor *effect[0]
+		# 	self.velocity[1] += factor *effect[1]
+		# 	self.velocity[2] += factor *effect[2]
 
-		self.velocity = vector.limit_magnitude(self.velocity, _SPEED_MAX, _SPEED_MIN)
+		# self.velocity = vector.limit_magnitude(self.velocity, _SPEED_MAX, _SPEED_MIN)
 
-		#changing the boids position in accordance with velocity.
-		for i in range(0, len(self.position)):
-			self.position[i] += delta*self.velocity[i]
+		# #changing the boids position in accordance with velocity.
+		# for i in range(0, len(self.position)):
+		# 	self.position[i] += delta*self.velocity[i]
 
 def velocity_print(a):
 	print (a.velocity[0], a.velocity[1], a.velocity[2])
