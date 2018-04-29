@@ -2,6 +2,8 @@ from pyglet.gl import *
 from pyglet.window import key
 import math, random, vector
 from boid import Boid
+import multiprocessing
+
 
 class Model:
 	def create_boid(self,length, width, height):
@@ -11,21 +13,9 @@ class Model:
 
 	def __init__(self):
 		self.batch = pyglet.graphics.Batch()
-
-		# color = ('c3f', (1,0.4,0.5,)*4)
-		# color2 = ('c3f', (0.5, 0.4, 1)*4)
-		# color3 = ('c3f', (1, 0.5, 0.4)*4)
-		# color4 = ('c3f', (0.4, 1, 0.5)*4)
-		# x,y,z = 0,0,-1
-		# X,Y,Z = x+1, y+1, z+1
-		# self.faces = []
-		# self.faces.append(self.batch.add(4, GL_QUADS, None, ('v3f', (X,y,z, x,y,z, x,Y,z, X,Y,z,)), color )) #back
-		# self.faces.append(self.batch.add(4, GL_QUADS, None, ('v3f', (x,y,Z, X,y,Z, X,Y,Z, x,Y,Z,)), color2 )) #front
-		# self.faces.append(self.batch.add(4, GL_QUADS, None, ('v3f', (x,y,z, x,y,Z, x,Y,Z, x,Y,z,)), color3 )) #left
-		# self.faces.append(self.batch.add(4, GL_QUADS, None, ('v3f', (X,y,Z, X,y,z, X,Y,z, X,Y,Z,)), color4 )) #right
 		self.objs = []
 		self.boids = []
-		for n in range(150):
+		for n in range(200):
 			self.boids.append(self.create_boid(200,50,200))
 
 		for boid in self.boids:
@@ -49,10 +39,16 @@ class Model:
 		# color = ('c3f', (c1, c2, c3)*3)
 		# self.faces = []
 		# self.faces.append(self.batch.add(3, GL_TRIANGLES, None, ('v3f', (x,y,z, x+1,y,z, x+0.5, y+1,z, )), color))
-
+	def update_boid(self, start, stop):
+		for ind in range(start, stop):
+			self.boids[ind].update(0.0003, self.boids, [],[])
 	def draw(self):
+		# for n in range(0, len(self.boids), 100):
+		# 	stop = n+100 if n +100 <= len(self.boids) else len(self.boids)
+		# 	p = multiprocessing.Process(target = self.update_boid, args = (n, stop))
+		# 	p.start()
 		for boid in self.boids:
-			boid.update(0.0003, self.boids, [], [])
+			boid.update(0.0003, self.boids, [],[])
 		for num in range(len(self.objs)//2):
 			obj = self.objs[num*2]
 			obj1 = self.objs[num*2+1]

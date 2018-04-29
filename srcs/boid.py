@@ -16,7 +16,7 @@ _SPEED_MAX = 7000.0
 _SPEED_MIN = 4000.0
 
 
-_FACTOR_COHESION = 0.03
+_FACTOR_COHESION = 0.3
 _FACTOR_ALIGNMENT = 0.045
 _FACTOR_BOID_AVOIDANCE = 7.5
 _FACTOR_OBSTACLE_AVOID = 300.0
@@ -75,7 +75,36 @@ class Boid:
 						vector.angle_between(self.velocity, diff) <= _VIEW_ANGLE):
 					(self.neighbours).append(boid)
 			
+	def all_in_one(self):
+		if len(self.neighbours) >0:
+			c = [0.0, 0.0, 0.0]
+			sum_x, sum_y, sum_z = 0.0, 0.0, 0.0
+			sum_x1, sum_y1, sum_z1 = 0.0, 0.0, 0.0
+			for boid in self.neighbours:
+				sum_x += boid.position[0]
+				sum_y += boid.position[1]
+				sum_z += boid.position[2]
 
+				sum_x1 += boid.velocity[0]
+				sum_y1 += boid.velocity[1]
+				sum_z1 += boid.velocity[2]
+
+				diff = boid.position[0] - self.position[0], boid.position[1] - self.position[1], boid.position[2] - self.position[2]
+				inv_sqr_magnitude = 1/((vector.magnitude(*diff)- self.size[0])**2)
+				c[0] = c[0] - inv_sqr_magnitude*diff[0]
+				c[1] = c[1] - inv_sqr_magnitude*diff[1]
+				c[2] = c[2] - inv_sqr_magnitude*diff[2]
+			average_x, average_y, average_z = (sum_x/len(self.neighbours), sum_y/len(self.neighbours), sum_z/len(self.neighbours))
+			out = [[average_x-self.position[0], average_y-self.position[1], average_z-self.position[2]]]
+
+			average_x, average_y, average_z = (sum_x1/len(self.neighbours), sum_y1/len(self.neighbours), sum_z1/len(self.neighbours))
+			out.append([average_x-self.position[0], average_y-self.position[1], average_z-self.position[2]])
+			out.append(vector.limit_magnitude(c, _COLLISION_VELOCITY_MAX))
+			return out
+		else:
+			return [[0.0,0.0,0.0],[0.0,0.0,0.0],[0.0,0.0,0.0]]
+
+		
 
 	def average_position(self):
 		if len(self.neighbours) >0:
@@ -147,9 +176,13 @@ class Boid:
 		# obstacles = self.nearby_obj(objs, _MIN_OBSTACLE_DISTANCE)
 		self.nearby_obj(obstacles, _MIN_OBSTACLE_DISTANCE)
 		#initializing all the change vectors
-		cohesion_factor = self.average_position()
-		alignment_factor = self.average_velocity()
-		seperation_factor = self.avoid_collisions(self.neighbours, _BOID_COLLISION_DISTANCE)
+		# cohesion_factor = self.average_position()
+		# alignment_factor = self.average_velocity()
+		# seperation_factor = self.avoid_collisions(self.neighbours, _BOID_COLLISION_DISTANCE)
+		p = self.all_in_one()
+		cohesion_factor = p[0]
+		alignment_factor = p[1]
+		seperation_factor = p[2]
 		collision_factor = self.avoid_collisions(self.obj_nearby, _MIN_OBSTACLE_DISTANCE)
 		attraction_factor = self.attraction(attractors)
 
