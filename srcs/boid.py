@@ -12,8 +12,8 @@ _BOID_COLLISION_DISTANCE = 50.0
 _MIN_OBSTACLE_DISTANCE = 250.0
 _COLLISION_VELOCITY_MAX = 1.0
 
-_SPEED_MAX = 150.0
-_SPEED_MIN = 20.0
+_SPEED_MAX = 7000.0
+_SPEED_MIN = 4000.0
 
 
 _FACTOR_COHESION = 0.03
@@ -85,8 +85,10 @@ class Boid:
 				sum_y += boid.position[1]
 				sum_z += boid.position[2]
 			average_x, average_y, average_z = (sum_x/len(self.neighbours), sum_y/len(self.neighbours), sum_z/len(self.neighbours))
-			group_centre = [average_x-self.position[0], average_y-self.position[1], average_z-self.position[2]]
-			return group_centre
+			return [average_x-self.position[0], average_y-self.position[1], average_z-self.position[2]]
+			# print (group_centre)
+			# return group_centre
+
 		else:
 			return [0.0, 0.0, 0.0]
 
@@ -145,30 +147,31 @@ class Boid:
 		# obstacles = self.nearby_obj(objs, _MIN_OBSTACLE_DISTANCE)
 		self.nearby_obj(obstacles, _MIN_OBSTACLE_DISTANCE)
 		#initializing all the change vectors
-		cohesion_factor = self.average_position(),
-		alignment_factor = self.average_velocity(),
-		seperation_factor = self.avoid_collisions(self.neighbours, _BOID_COLLISION_DISTANCE),
-		# collision_factor = self.avoid_collisions(self.obj_nearby, _MIN_OBSTACLE_DISTANCE)
-		# attraction_factor = self.attraction(attractors)
+		cohesion_factor = self.average_position()
+		alignment_factor = self.average_velocity()
+		seperation_factor = self.avoid_collisions(self.neighbours, _BOID_COLLISION_DISTANCE)
+		collision_factor = self.avoid_collisions(self.obj_nearby, _MIN_OBSTACLE_DISTANCE)
+		attraction_factor = self.attraction(attractors)
 
 		self.force_factors = [
-			(_FACTOR_COHESION, cohesion_factor)
-			(_FACTOR_ALIGNMENT, alignment_factor),
-			(_FACTOR_BOID_AVOIDANCE, seperation_factor)
-			(_FACTOR_OBSTACLE_AVOID, collision_factor),
-			# (_FACTOR_ATTRACT, attraction_factor)]
-			]
+			[_FACTOR_COHESION, cohesion_factor],
+			[_FACTOR_ALIGNMENT, alignment_factor],
+			[_FACTOR_BOID_AVOIDANCE, seperation_factor],
+			[_FACTOR_OBSTACLE_AVOID, collision_factor],
+			[_FACTOR_ATTRACT, attraction_factor]]
+		# print(_FACTOR_COHESION)
+		# print(cohesion_factor)
+		# y = _FACTOR_COHESION*cohesion_factor[0]
+		for x in self.force_factors:
+			self.velocity[0] += x[1][0]*x[0] 
+			self.velocity[1] += x[0] *x[1][1]*0.2
+			self.velocity[2] += x[0] *x[1][2]
 
-		# for factor, effect in self.force_factors:
-		# 	self.velocity[0] += factor *effect[0]
-		# 	self.velocity[1] += factor *effect[1]
-		# 	self.velocity[2] += factor *effect[2]
+		self.velocity = vector.limit_magnitude(self.velocity, _SPEED_MAX, _SPEED_MIN, True)
 
-		# self.velocity = vector.limit_magnitude(self.velocity, _SPEED_MAX, _SPEED_MIN)
-
-		# #changing the boids position in accordance with velocity.
-		# for i in range(0, len(self.position)):
-		# 	self.position[i] += delta*self.velocity[i]
+		#changing the boids position in accordance with velocity.
+		for i in range(0, len(self.position)):
+			self.position[i] += delta*self.velocity[i]
 
 def velocity_print(a):
 	print (a.velocity[0], a.velocity[1], a.velocity[2])
