@@ -27,7 +27,7 @@ class Boid:
 				position=[100.0, 100.0, 100.0],
 				bounds=[1000, 1000, 1000],
 				velocity=[0.0, 0.0, 0.0],
-				color=[1.0, 1.0, 1.0],
+				color=[0.0, 0.0, 0.0],
 				neighbours=[],
 				group_average_velocity=[0.0,0.0,0.0],
 				group_centre=[0.0,0.0,0.0],
