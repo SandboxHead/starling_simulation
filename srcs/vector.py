@@ -3,11 +3,18 @@ import math
 def magnitude(x, y, z):
 	return math.sqrt((x**2)+(y**2)+(z**2))
 
+def magnitude2(x, y, z):
+	return math.sqrt((x**2)+(z**2))
+
 def dot(a, b):
 	return sum(i*j for i,j in zip(a, b))
 
+def dot2(a, b):
+	return (a[0]*b[0]+a[2]*b[2])
+
+
 def angle_between(a, b):
-	angle = math.degrees(math.acos(dot(a, b) / (magnitude(*a) * magnitude(*b))))
+	angle = math.degrees(math.acos(dot2(a, b) / (magnitude2(*a) * magnitude2(*b))))
 	return angle
 
 def limit_magnitude(vector, max_magnitude, min_magnitude = 0.0):
