@@ -18,4 +18,4 @@ def limit_magnitude(vector, max_magnitude, min_manitude = 0.0):
 		normalizing_factor = min_magnitude /mag
 	else: return vector
 
-return [value * normalizing_factor for value in vector]
+	return [value * normalizing_factor for value in vector]

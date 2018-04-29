@@ -4,7 +4,7 @@ from pyglet.gl import(
     glVertex3f, glTranslatef, glRotatef,
     GL_LINE_LOOP, GL_LINES, GL_TRIANGLES)
 
-from . import vector
+import vector
 
 _RANGE_OF_BOID = 100.0
 _VIEW_ANGLE = 110
@@ -37,7 +37,7 @@ class Boid:
 
 			self.velocity = velocity
 			self.color = color
-			self.change_vectors = []
+			self.force_factors = []
 
 	def __repr__(self):
 		return "Boid: position={}, velocity={}, color={}".format(
@@ -51,18 +51,17 @@ class Boid:
 		glEnd()
 
 	def render_view(self):
-
-
+		return None
 
 	def render_change_vectors(self):
-
+		return None
 
 	def render_boid(self):
-
+		return None
 
 
 	def draw(self, show_velocity, show_veiw, show_vectores):
-
+		return None
 
 	def determine_nearby_boids(self, all_boids):
 			(self.neighbours).clear()
@@ -112,9 +111,9 @@ class Boid:
 									obj.position[2] - self.position[2]) <= _MIN_OBSTACLE_DISTANCE))
 		return
 
-	def avoid_collisions(self, collision_distance):
+	def avoid_collisions(self, objs, collision_distance):
 		c = [0.0, 0.0, 0.0]
-		for obj in self.nearby_obj:
+		for obj in objs:
 			diff = obj.position[0] - self.position[0], obj.position[1] - self.position[1], obj.position[2] - self.position[2]
 			inv_sqr_magnitude = 1/((vector.magnitude(*diff)- self.size)**2)
 
@@ -123,21 +122,56 @@ class Boid:
 			c[2] = c[2] - inv_sqr_magnitude*diff[2]
 		return vector.limit_magnitude(c, _COLLISION_VELOCITY_MAX)
 
-	def attraction(self, attractors): #attractors are not affected by distance, so they have a fix effect.
+	#attractors are not affected by distance, so they have a fix effect.
+	def attraction(self, attractors): 
 		a = [0.0, 0.0, 0.0]
-        if not attractors:
-            return a
 
-        for attractor in attractors:
-            a[0] += attractor.position[0] - self.position[0]
-            a[1] += attractor.position[1] - self.position[1]
-            a[2] += attractor.position[1] - self.position[2]
+		if(len(attractors)==0):
+			return a
 
-        return a
+		for attractor in attractors:
+			a[0] += attractor.position[0] - self.position[0]
+			a[1] += attractor.position[1] - self.position[1]
+			a[2] += attractor.position[1] - self.position[2]
+
+		return a
 
 
-	def update(self, dt, all_boids, attractors, obstacles):
+	def update(self, delta, all_boids, attractors, obstacles):
 		#start with determining nearby boids.
 		self.determine_nearby_boids(all_boids)
 
+		# obstacles = self.nearby_obj(objs, _MIN_OBSTACLE_DISTANCE)
+
 		#initializing all the change vectors
+		cohesion_factor = self.average_position(),
+		alignment_factor = self.average_velocity(),
+		seperation_factor = self.avoid_collisions(self.neighbours, _BOID_COLLISION_DISTANCE),
+		collision_factor = self.avoid_collisions(obstacles, _MIN_OBSTACLE_DISTANCE)
+		attraction_factor = self.attraction(attractors)
+
+		self.force_factors = [
+			(_FACTOR_COHESION, cohesion_factor),
+			(_FACTOR_ALIGNMENT, alignment_factor),
+			(_FACTOR_BOID_AVOIDANCE, seperation_factor),
+			(_FACTOR_OBSTACLE_AVOID, collision_factor),
+			(_FACTOR_ATTRACT, attraction_factor)]
+
+		for factor, effect in self.force_factors:
+			self.velocity[0] += factor*effect[0]
+			self.velocity[1] += factor*effect[1]
+			self.velocity[2] += factor*effect[2]
+
+		self.velocity = vector.limit_magnitude(self.velocity, _SPEED_MAX, _SPEED_MIN)
+
+		#changing the boids position in accordance with velocity.
+		for i in range(0, len(self.position)):
+			self.position[i] += delta*self.velocity[i]
+
+def velocity_print(a):
+	print (a.velocity[0], a.velocity[1], a.velocity[2])
+
+if __name__ == '__main__':
+	chidiya = Boid()
+	velocity_print(chidiya)
+
