@@ -1,4 +1,5 @@
 import math
+import random
 from pyglet.gl import( 
 	glPushMatrix, glPopMatrix, glBegin, glEnd, glColor3f,
     glVertex3f, glTranslatef, glRotatef,
@@ -34,7 +35,8 @@ class Boid:
 				group_centre=[0.0,0.0,0.0],
 				obj_nearby=[],
 				size = [10,7,7],
-				factor_bound = [0,0,0]):
+				factor_bound = [0,0,0],
+				fly = random.randint(0, 1)):
 			self.factor_bound = factor_bound
 			self.bound = bounds
 			self.size = size
@@ -43,6 +45,10 @@ class Boid:
 			self.velocity = velocity
 			self.color = color
 			self.force_factors = []
+			if fly==0:
+				self.fly = -1
+			else:
+				self.fly =1
 
 			self.obj_nearby = obj_nearby
 

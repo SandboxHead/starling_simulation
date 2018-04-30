@@ -25,12 +25,13 @@ class Model:
 			vel = boid.velocity
 			# x1, y1, z1, x2, y2, z2, x3, y3, z3 = x/10+0.5,y/10,z/10, x/10-0.5,y/10,z/10, x/10, y/10,z/10-2
 
-			p = vector.bird_orient(boid.velocity, boid.position, [20, 5, 5])
+			p = vector.bird_orient(boid.fly, boid.velocity, boid.position, [20, 10, 3])
 
 
 
-			self.objs.append(self.batch.add(3, GL_TRIANGLES, None, ('v3f', (p[1][0]/30,p[1][1]/30,p[1][2]/30,p[2][0]/30,p[2][1]/30,p[2][2]/30,p[3][0]/30,p[3][1]/30,p[3][2]/30,)), color))
+			self.objs.append(self.batch.add(3, GL_TRIANGLES, None, ('v3f', (p[1][0]/30,p[1][1]/30,p[1][2]/30,p[2][0]/30,p[2][1]/30,p[2][2]/30,p[0][0]/30,p[0][1]/30,p[0][2]/30,)), color))
 			self.objs.append(self.batch.add(3, GL_TRIANGLES, None, ('v3f', (p[0][0]/30,p[0][1]/30,p[0][2]/30,p[1][0]/30,p[1][1]/30,p[1][2]/30,p[4][0]/30,p[4][1]/30,p[4][2]/30,)), color))
+			self.objs.append(self.batch.add(3, GL_TRIANGLES, None, ('v3f', (p[0][0]/30,p[0][1]/30,p[0][2]/30,p[1][0]/30,p[1][1]/30,p[1][2]/30,p[3][0]/30,p[3][1]/30,p[3][2]/30,)), color))			
 
 		# boid = Boid()
 		# pos = boid.position
@@ -49,15 +50,18 @@ class Model:
 		# 	p.start()
 		for boid in self.boids:
 			boid.update(0.0003, self.boids, [],[])
-		for num in range(len(self.objs)//2):
-			obj = self.objs[num*2]
-			obj1 = self.objs[num*2+1]
+		for num in range(len(self.boids)):
+			obj = self.objs[num*3]
+			obj1 = self.objs[num*3+1]
+			obj2 = self.objs[num*3+2]
 			boid = self.boids[num]
 			x, y, z = boid.position
-			p = vector.bird_orient(boid.velocity, boid.position, [20, 5, 5])
+			p = vector.bird_orient(boid.fly, boid.velocity, boid.position, [20, 10, 3])
+			boid.fly = -1*boid.fly
 
-			obj.vertices = [p[1][0]/30,p[1][1]/30,p[1][2]/30,p[2][0]/30,p[2][1]/30,p[2][2]/30,p[3][0]/30,p[3][1]/30,p[3][2]/30]
+			obj.vertices = [p[1][0]/30,p[1][1]/30,p[1][2]/30,p[2][0]/30,p[2][1]/30,p[2][2]/30,p[0][0]/30,p[0][1]/30,p[0][2]/30]
 			obj1.vertices = [p[0][0]/30,p[0][1]/30,p[0][2]/30,p[1][0]/30,p[1][1]/30,p[1][2]/30,p[4][0]/30,p[4][1]/30,p[4][2]/30]
+			obj2.vertices = [p[0][0]/30,p[0][1]/30,p[0][2]/30,p[1][0]/30,p[1][1]/30,p[1][2]/30,p[3][0]/30,p[3][1]/30,p[3][2]/30]
 
 			# print(obj.vertices)
 		self.batch.draw()
