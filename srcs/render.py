@@ -8,8 +8,8 @@ import multiprocessing
 class Model:
 	def create_boid(self,length, width, height):
 		return Boid(position=[random.uniform(-length, length),random.uniform(-width, width),random.uniform(-height-10, 0)],
-					velocity=[random.uniform(-25000,30000),random.uniform(-1000,1000),random.uniform(-25000,30000)],
-					color=[random.random(),random.random(),random.random()])
+					velocity=[random.uniform(-25000,30000),random.uniform(-100,100),random.uniform(-25000,30000)],
+					color=[0,0,0])
 
 	def __init__(self):
 		self.batch = pyglet.graphics.Batch()
@@ -96,7 +96,7 @@ class Window(pyglet.window.Window):
 
 	def set3d(self):
 		self.Projection()
-		gluPerspective(50, self.width/self.height, 0.05, 1000)
+		gluPerspective(50, self.width/self.height, 0.05, 5000)
 		self.Model()
 
 
