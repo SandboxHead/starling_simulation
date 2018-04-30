@@ -21,6 +21,7 @@ _FACTOR_ALIGNMENT = 0.045
 _FACTOR_BOID_AVOIDANCE = 7.5
 _FACTOR_OBSTACLE_AVOID = 300.0
 _FACTOR_ATTRACT = 0.035
+_FACTOR_BOUND = 100
 
 class Boid:
 	def __init__(self,
@@ -32,7 +33,9 @@ class Boid:
 				group_average_velocity=[0.0,0.0,0.0],
 				group_centre=[0.0,0.0,0.0],
 				obj_nearby=[],
-				size = [10,7,7]):
+				size = [10,7,7],
+				factor_bound = [0,0,0]):
+			self.factor_bound = factor_bound
 			self.bound = bounds
 			self.size = size
 			self.position = position
@@ -105,7 +108,6 @@ class Boid:
 		else:
 			return [[0.0,0.0,0.0],[0.0,0.0,0.0],[0.0,0.0,0.0]]
 
-		
 
 	def average_position(self):
 		if len(self.neighbours) >0:
@@ -170,6 +172,13 @@ class Boid:
 		return a
 
 
+	def know_bound(self):
+		fact_bound = [0.0, 0.0, 0.0]
+		for i in range(3):
+			if(self.position[i]>self.bound[i] or self.position[i] < -self.bound[i]):
+				fact_bound[i] = self.bound[i]-self.position[i] 
+		return fact_bound
+
 	def update(self, delta, all_boids, attractors, obstacles):
 		#start with determining nearby boids.
 		self.determine_nearby_boids(all_boids)
@@ -186,13 +195,15 @@ class Boid:
 		seperation_factor = p[2]
 		collision_factor = self.avoid_collisions(self.obj_nearby, _MIN_OBSTACLE_DISTANCE)
 		attraction_factor = self.attraction(attractors)
+		bound_factor = self.know_bound()
 
 		self.force_factors = [
 			[_FACTOR_COHESION, cohesion_factor],
 			[_FACTOR_ALIGNMENT, alignment_factor],
 			[_FACTOR_BOID_AVOIDANCE, seperation_factor],
 			[_FACTOR_OBSTACLE_AVOID, collision_factor],
-			[_FACTOR_ATTRACT, attraction_factor]]
+			[_FACTOR_ATTRACT, attraction_factor],
+			[_FACTOR_BOUND, bound_factor]]
 		# print(_FACTOR_COHESION)
 		# print(cohesion_factor)
 		# y = _FACTOR_COHESION*cohesion_factor[0]
@@ -206,8 +217,8 @@ class Boid:
 		#changing the boids position in accordance with velocity.
 		for i in range(0, len(self.position)):
 			self.position[i] += delta*self.velocity[i]
-			if (self.position[i] > self.bound[i]) or (self.position[i]< -self.bound[i]):
-				self.position[i] = -self.position[i]
+			# if (self.position[i] > self.bound[i]) or (self.position[i]< -self.bound[i]):
+			# 	self.position[i] = -self.position[i]
 
 		# for i in range(3):
 		# 	if (self.position[i] > self.bound[i]) or (self.position[i]< -self.bound[i]):
