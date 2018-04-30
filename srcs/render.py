@@ -8,7 +8,7 @@ import multiprocessing
 class Model:
 	def create_boid(self,length, width, height):
 		return Boid(position=[random.uniform(-length, length),random.uniform(-width, width),random.uniform(-height-10, 0)],
-					velocity=[random.uniform(3000,5000),random.uniform(-500,500),random.uniform(3000,5000)],
+					velocity=[random.uniform(-25000,30000),random.uniform(-1000,1000),random.uniform(-25000,30000)],
 					color=[random.random(),random.random(),random.random()])
 
 	def __init__(self):
@@ -29,8 +29,8 @@ class Model:
 
 
 
-			self.objs.append(self.batch.add(3, GL_TRIANGLES, None, ('v3f', (p[1][0]/10,p[1][1]/10,p[1][2]/10,p[2][0]/10,p[2][1]/10,p[2][2]/10,p[3][0]/10,p[3][1]/10,p[3][2]/10,)), color))
-			self.objs.append(self.batch.add(3, GL_TRIANGLES, None, ('v3f', (p[0][0]/10,p[0][1]/10,p[0][2]/10,p[1][0]/10,p[1][1]/10,p[1][2]/10,p[4][0]/10,p[4][1]/10,p[4][2]/10,)), color))
+			self.objs.append(self.batch.add(3, GL_TRIANGLES, None, ('v3f', (p[1][0]/30,p[1][1]/30,p[1][2]/30,p[2][0]/30,p[2][1]/30,p[2][2]/30,p[3][0]/30,p[3][1]/30,p[3][2]/30,)), color))
+			self.objs.append(self.batch.add(3, GL_TRIANGLES, None, ('v3f', (p[0][0]/30,p[0][1]/30,p[0][2]/30,p[1][0]/30,p[1][1]/30,p[1][2]/30,p[4][0]/30,p[4][1]/30,p[4][2]/30,)), color))
 
 		# boid = Boid()
 		# pos = boid.position
@@ -56,15 +56,15 @@ class Model:
 			x, y, z = boid.position
 			p = vector.bird_orient(boid.velocity, boid.position, [20, 5, 5])
 
-			obj.vertices = [p[1][0]/10,p[1][1]/10,p[1][2]/10,p[2][0]/10,p[2][1]/10,p[2][2]/10,p[3][0]/10,p[3][1]/10,p[3][2]/10]
-			obj1.vertices = [p[0][0]/10,p[0][1]/10,p[0][2]/10,p[1][0]/10,p[1][1]/10,p[1][2]/10,p[4][0]/10,p[4][1]/10,p[4][2]/10]
+			obj.vertices = [p[1][0]/30,p[1][1]/30,p[1][2]/30,p[2][0]/30,p[2][1]/30,p[2][2]/30,p[3][0]/30,p[3][1]/30,p[3][2]/30]
+			obj1.vertices = [p[0][0]/30,p[0][1]/30,p[0][2]/30,p[1][0]/30,p[1][1]/30,p[1][2]/30,p[4][0]/30,p[4][1]/30,p[4][2]/30]
 
 			# print(obj.vertices)
 		self.batch.draw()
 
 class Player:
 	def __init__(self):
-		self.pos = [0,0,0]
+		self.pos = [0,0,20]
 		self.rot = [0,0]
 
 	def mouse_motion(self, dx, dy):

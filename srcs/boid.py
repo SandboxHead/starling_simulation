@@ -12,8 +12,8 @@ _BOID_COLLISION_DISTANCE = 50.0
 _MIN_OBSTACLE_DISTANCE = 250.0
 _COLLISION_VELOCITY_MAX = 1.0
 
-_SPEED_MAX = 7000.0
-_SPEED_MIN = 4000.0
+_SPEED_MAX = 35000.0
+_SPEED_MIN = 20000.0
 
 
 _FACTOR_COHESION = 0.3
@@ -33,6 +33,7 @@ class Boid:
 				group_centre=[0.0,0.0,0.0],
 				obj_nearby=[],
 				size = [10,7,7]):
+			self.bound = bounds
 			self.size = size
 			self.position = position
 			self.neighbours = neighbours
@@ -205,6 +206,12 @@ class Boid:
 		#changing the boids position in accordance with velocity.
 		for i in range(0, len(self.position)):
 			self.position[i] += delta*self.velocity[i]
+			if (self.position[i] > self.bound[i]) or (self.position[i]< -self.bound[i]):
+				self.position[i] = -self.position[i]
+
+		# for i in range(3):
+		# 	if (self.position[i] > self.bound[i]) or (self.position[i]< -self.bound[i]):
+		# 		self.position = vector.limit_magnitude(self.position, self.bound[i], -self.bound[i], True)				
 
 def velocity_print(a):
 	print (a.velocity[0], a.velocity[1], a.velocity[2])
