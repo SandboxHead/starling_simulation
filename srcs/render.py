@@ -155,6 +155,17 @@ class Window(pyglet.window.Window):
 		self.model.draw()
 		glPopMatrix()
 
+def run():
+	window = Window( width=1900, height=1000, caption = "Minecraft", resizable=True)
+	glClearColor(0.5,0.7,1,1)
+	glEnable(GL_DEPTH_TEST)
+	# ps = []
+	# for x in range
+
+	# pyglet.graphics.draw(50000, pyglet.gl.GL_LINE_LOOP, ('v3f', ps, 'c3f', (0,0,0)*50000) )
+	pyglet.app.run()
+
+
 if __name__ == '__main__':
 	window = Window( width=1900, height=1000, caption = "Minecraft", resizable=True)
 	glClearColor(0.5,0.7,1,1)
