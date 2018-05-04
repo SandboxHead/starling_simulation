@@ -25,6 +25,7 @@ _FACTOR_ATTRACT = 0.035
 _FACTOR_BOUND = 0.0008
 
 class Boid:
+	"""This is the main boid object."""
 	def __init__(self,
 				position=[100.0, 100.0, 100.0],
 				bounds=[200, 5, 200],
@@ -58,30 +59,15 @@ class Boid:
 			self.obj_nearby = obj_nearby
 
 	def __repr__(self):
+		"""Function to get a string of the boid. Boid position, velocity and color is displayed here.""" 
 		return "Boid: position={}, velocity={}, color={}".format(
 			self.position, self.velocity, self.color)
 
-	def render_velocity(self):
-		glColor3f(0.6, 0.6, 0.6)
-		glBegin(GL_LINES)
-		glVertex3f(0.0, 0.0, 0.0)
-		glVertex3f(_RANGE_OF_BOID, 0.0, 0.0)
-		glEnd()
 
-	def render_view(self):
-		return None
-
-	def render_change_vectors(self):
-		return None
-
-	def render_boid(self):
-		return None
-
-
-	def draw(self, show_velocity, show_veiw, show_vectores):
-		return None
 
 	def determine_nearby_boids(self, all_boids):
+		"""This function takes a list of boids as input update neighbours list of boids. It also takes field of view into consideration."""
+		if (len(all_boids)>0):
 			(self.neighbours).clear()
 			for boid in all_boids:
 				diff = (boid.position[0] - self.position[0], boid.position[1] - self.position[1], boid.position[2] - self.position[2])
@@ -121,6 +107,7 @@ class Boid:
 
 
 	def average_position(self):
+		"""determine average position of all the boids in its neighbours"""
 		if len(self.neighbours) >0:
 			sum_x, sum_y, sum_z = 0.0, 0.0, 0.0
 			for boid in self.neighbours:
@@ -136,6 +123,7 @@ class Boid:
 			return [0.0, 0.0, 0.0]
 
 	def average_velocity(self):
+		"""Determine average velocity of all the boids in its neighbour"""
 		if len(self.neighbours) >0:
 			sum_x, sum_y, sum_z = 0.0, 0.0, 0.0
 			for boid in self.neighbours:
@@ -150,6 +138,7 @@ class Boid:
 		
 
 	def nearby_obj(self, objs, _MIN_OBSTACLE_DISTANCE):
+		"""It takes a list of predators and a safe distance from it and update the list of nearby objects in it."""
 		self.obj_nearby = [
 			obj for obj in objs
 			if ( vector.magnitude(obj.position[0] - self.position[0],
@@ -158,6 +147,7 @@ class Boid:
 
 
 	def avoid_collisions(self, objs, collision_distance):
+		"""This takes list of objects nearby it and determines how much boid should change direction to avoid collission with them."""
 		c = [0.0, 0.0, 0.0]
 		for obj in objs:
 			diff = obj.position[0] - self.position[0], obj.position[1] - self.position[1], obj.position[2] - self.position[2]
@@ -170,6 +160,7 @@ class Boid:
 
 	#attractors are not affected by distance, so they have a fix effect.
 	def attraction(self, attractors): 
+		"""This takes a list of nearby boids or attractors and determine how much boid should move to be with the group."""
 		a = [0.0, 0.0, 0.0]
 
 		if(len(attractors)==0):
@@ -181,9 +172,8 @@ class Boid:
 			a[2] += attractor.position[1] - self.position[2]
 
 		return a
-
-
 	def know_bound(self):
+		"""This function gives the change in direction due to boundary behind which it could not go."""
 		fact_bound = [0.0, 0.0, 0.0]
 		for i in range(3):
 			if(self.position[i]>self.bound[i] or self.position[i] < -self.bound[i]):
@@ -191,6 +181,7 @@ class Boid:
 		return fact_bound
 
 	def update(self, delta, all_boids, attractors, obstacles):
+		"""This is main function which figures out all the conditions and determine resultant change in the boid location per cycle. It calls all the function given above and find resultant change in location and applies it to the boid."""
 		#start with determining nearby boids.
 		self.determine_nearby_boids(all_boids)
 

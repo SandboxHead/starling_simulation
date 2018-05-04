@@ -3,4 +3,4 @@ init:
 
 
 run:
-	python3 srcs/render.py
+	python3 srcs/render.py 200

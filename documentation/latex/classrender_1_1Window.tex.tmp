@@ -1,0 +1,97 @@
+\hypertarget{classrender_1_1Window}{}\section{render.\+Window Class Reference}
+\label{classrender_1_1Window}\index{render.\+Window@{render.\+Window}}
+
+
+Inheritance diagram for render.\+Window\+:
+% FIG 0
+
+
+Collaboration diagram for render.\+Window\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classrender_1_1Window_ae56586898806ddc34af546b6b9c75316}\label{classrender_1_1Window_ae56586898806ddc34af546b6b9c75316}} 
+def {\bfseries Projection} (self)
+\item 
+\mbox{\Hypertarget{classrender_1_1Window_ade4ff737fa4782a1e118632c4ec4a4d8}\label{classrender_1_1Window_ade4ff737fa4782a1e118632c4ec4a4d8}} 
+def {\bfseries Model} (self)
+\item 
+\mbox{\Hypertarget{classrender_1_1Window_a8a07f31353f72a7a1fba480c5636a3f7}\label{classrender_1_1Window_a8a07f31353f72a7a1fba480c5636a3f7}} 
+def {\bfseries set3d} (self)
+\item 
+\mbox{\Hypertarget{classrender_1_1Window_a2f64f40e2e493df9496a91a4a4365932}\label{classrender_1_1Window_a2f64f40e2e493df9496a91a4a4365932}} 
+def {\bfseries set\+Lock} (self, state)
+\item 
+\mbox{\Hypertarget{classrender_1_1Window_aed0211bc38853d400f38c6c470c24e4b}\label{classrender_1_1Window_aed0211bc38853d400f38c6c470c24e4b}} 
+def {\bfseries on\+\_\+mouse\+\_\+motion} (self, x, y, dx, dy)
+\item 
+\mbox{\Hypertarget{classrender_1_1Window_ae5c0ce42f7a8c99902fc4defb39ddae1}\label{classrender_1_1Window_ae5c0ce42f7a8c99902fc4defb39ddae1}} 
+def {\bfseries on\+\_\+key\+\_\+press} (self, K\+EY, M\+OD)
+\item 
+\mbox{\Hypertarget{classrender_1_1Window_a7265f91322a9ecc4f730815c73856c30}\label{classrender_1_1Window_a7265f91322a9ecc4f730815c73856c30}} 
+def {\bfseries update} (self, dt)
+\item 
+\mbox{\Hypertarget{classrender_1_1Window_ab73618713a45703bee0cf99fbf95f043}\label{classrender_1_1Window_ab73618713a45703bee0cf99fbf95f043}} 
+def {\bfseries push} (self, pos, rot)
+\item 
+def \hyperlink{classrender_1_1Window_a5d62be211d2907cc676f057f6c943507}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, args, kwargs)
+\item 
+def \hyperlink{classrender_1_1Window_af0d0a67f269dc77d24eaf72ed4c96d9a}{on\+\_\+draw} (self)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classrender_1_1Window_ac18f6bcd297469e182f4f72d47e1d8f5}\label{classrender_1_1Window_ac18f6bcd297469e182f4f72d47e1d8f5}} 
+{\bfseries lock}
+\item 
+\mbox{\Hypertarget{classrender_1_1Window_a95dff3d0fa8f0faea78c41718c63f3df}\label{classrender_1_1Window_a95dff3d0fa8f0faea78c41718c63f3df}} 
+{\bfseries keys}
+\item 
+\mbox{\Hypertarget{classrender_1_1Window_a7c2b934a2de8e2dc9e19d9a50d73874d}\label{classrender_1_1Window_a7c2b934a2de8e2dc9e19d9a50d73874d}} 
+{\bfseries model}
+\item 
+\mbox{\Hypertarget{classrender_1_1Window_a9c79ca0d47a211a99a565f3047091f97}\label{classrender_1_1Window_a9c79ca0d47a211a99a565f3047091f97}} 
+{\bfseries player}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classrender_1_1Window_a0ea4cd625e6613c63a8cbb98a81b01cb}\label{classrender_1_1Window_a0ea4cd625e6613c63a8cbb98a81b01cb}} 
+bool {\bfseries lock} = False
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classrender_1_1Window_a1baf031b492c3604a083d13b5ec36da0}\label{classrender_1_1Window_a1baf031b492c3604a083d13b5ec36da0}} 
+{\bfseries mouse\+\_\+lock} = property(lambda self\+:self.\+lock, set\+Lock)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Main display object which organize player and boids in it.\end{DoxyVerb}
+ 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classrender_1_1Window_a5d62be211d2907cc676f057f6c943507}\label{classrender_1_1Window_a5d62be211d2907cc676f057f6c943507}} 
+\index{render\+::\+Window@{render\+::\+Window}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!render\+::\+Window@{render\+::\+Window}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def render.\+Window.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{args,  }\item[{}]{kwargs }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Constructor of the main display. It takes all the necessary arguments and create the display. It adds model and player into display.\end{DoxyVerb}
+ 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classrender_1_1Window_af0d0a67f269dc77d24eaf72ed4c96d9a}\label{classrender_1_1Window_af0d0a67f269dc77d24eaf72ed4c96d9a}} 
+\index{render\+::\+Window@{render\+::\+Window}!on\+\_\+draw@{on\+\_\+draw}}
+\index{on\+\_\+draw@{on\+\_\+draw}!render\+::\+Window@{render\+::\+Window}}
+\subsubsection{\texorpdfstring{on\+\_\+draw()}{on\_draw()}}
+{\footnotesize\ttfamily def render.\+Window.\+on\+\_\+draw (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function determines all the drawing which occurs in the display. It uses Model draw funtion to display all the boids onto the screen.\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+render.\+py\end{DoxyCompactItemize}

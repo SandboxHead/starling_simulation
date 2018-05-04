@@ -1,0 +1,152 @@
+\hypertarget{classboid_1_1Boid}{}\section{boid.\+Boid Class Reference}
+\label{classboid_1_1Boid}\index{boid.\+Boid@{boid.\+Boid}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classboid_1_1Boid_a79d14a195f383c4132c2dc49f3bb25d7}\label{classboid_1_1Boid_a79d14a195f383c4132c2dc49f3bb25d7}} 
+def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, position=\mbox{[}100.\+0, bounds=\mbox{[}200, velocity=\mbox{[}0.\+0, color=\mbox{[}0.\+0, neighbours=\mbox{[}$\,$\mbox{]}, group\+\_\+average\+\_\+velocity=\mbox{[}0.\+0, group\+\_\+centre=\mbox{[}0.\+0, obj\+\_\+nearby=\mbox{[}$\,$\mbox{]}, size=\mbox{[}10, factor\+\_\+bound=\mbox{[}0, fly=random.\+randint(0, 1))
+\item 
+def \hyperlink{classboid_1_1Boid_ab119eb2dfe1a5b2843929992af496051}{\+\_\+\+\_\+repr\+\_\+\+\_\+} (self)
+\item 
+def \hyperlink{classboid_1_1Boid_af50918fec659eb35307d69253ae89fe0}{determine\+\_\+nearby\+\_\+boids} (self, all\+\_\+boids)
+\item 
+\mbox{\Hypertarget{classboid_1_1Boid_a710bcaf3ada5f6075b724eea7a8f2f3f}\label{classboid_1_1Boid_a710bcaf3ada5f6075b724eea7a8f2f3f}} 
+def {\bfseries all\+\_\+in\+\_\+one} (self)
+\item 
+def \hyperlink{classboid_1_1Boid_af194aa87a6828aa7582431fdf074627b}{average\+\_\+position} (self)
+\item 
+def \hyperlink{classboid_1_1Boid_af3bebad17918fa7e106e50cc6f300209}{average\+\_\+velocity} (self)
+\item 
+def \hyperlink{classboid_1_1Boid_a4bf32244bda6419e04158e1b724b9b7e}{nearby\+\_\+obj} (self, objs, \+\_\+\+M\+I\+N\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE)
+\item 
+def \hyperlink{classboid_1_1Boid_a5abaa756b7a6faf040d06f5c9a2f5dff}{avoid\+\_\+collisions} (self, objs, collision\+\_\+distance)
+\item 
+def \hyperlink{classboid_1_1Boid_a6e4936558af1adad15340cf6ad4be290}{attraction} (self, attractors)
+\item 
+def \hyperlink{classboid_1_1Boid_aa9dc9d7da55ba1d25a58b71bb44f6c66}{know\+\_\+bound} (self)
+\item 
+def \hyperlink{classboid_1_1Boid_a8785ce00989f8a785bac850dc2455471}{update} (self, delta, all\+\_\+boids, attractors, obstacles)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classboid_1_1Boid_ac4c755ee562efe82d4be9c9c7ac46da9}\label{classboid_1_1Boid_ac4c755ee562efe82d4be9c9c7ac46da9}} 
+{\bfseries factor\+\_\+bound}
+\item 
+\mbox{\Hypertarget{classboid_1_1Boid_a6ddcb7177f25efb1b665a39eabb90c4f}\label{classboid_1_1Boid_a6ddcb7177f25efb1b665a39eabb90c4f}} 
+{\bfseries bound}
+\item 
+\mbox{\Hypertarget{classboid_1_1Boid_a9f06d68e73ee5c7ce56cef0799a7a759}\label{classboid_1_1Boid_a9f06d68e73ee5c7ce56cef0799a7a759}} 
+{\bfseries size}
+\item 
+\mbox{\Hypertarget{classboid_1_1Boid_a483cb30093bc500a6123d5a801247ad5}\label{classboid_1_1Boid_a483cb30093bc500a6123d5a801247ad5}} 
+{\bfseries position}
+\item 
+\mbox{\Hypertarget{classboid_1_1Boid_a8b8a4084f7ddb1c86f81716a909237a7}\label{classboid_1_1Boid_a8b8a4084f7ddb1c86f81716a909237a7}} 
+{\bfseries neighbours}
+\item 
+\mbox{\Hypertarget{classboid_1_1Boid_a7ca868ffdf56190aae1ce57cb8dbcf6b}\label{classboid_1_1Boid_a7ca868ffdf56190aae1ce57cb8dbcf6b}} 
+{\bfseries velocity}
+\item 
+\mbox{\Hypertarget{classboid_1_1Boid_a6a2ca3d501e4b2b0d531d4d968487907}\label{classboid_1_1Boid_a6a2ca3d501e4b2b0d531d4d968487907}} 
+{\bfseries color}
+\item 
+\mbox{\Hypertarget{classboid_1_1Boid_a2b906ea15b2d32920664ca5e1ef4b28d}\label{classboid_1_1Boid_a2b906ea15b2d32920664ca5e1ef4b28d}} 
+{\bfseries force\+\_\+factors}
+\item 
+\mbox{\Hypertarget{classboid_1_1Boid_a290e07411f873b8352e3dc8343ff0996}\label{classboid_1_1Boid_a290e07411f873b8352e3dc8343ff0996}} 
+{\bfseries dt}
+\item 
+\mbox{\Hypertarget{classboid_1_1Boid_acbe3f2ef13a5f30d34e908fd24db742b}\label{classboid_1_1Boid_acbe3f2ef13a5f30d34e908fd24db742b}} 
+{\bfseries mass}
+\item 
+\mbox{\Hypertarget{classboid_1_1Boid_afb1f7620a7d477a8fc07639f27c8f5cd}\label{classboid_1_1Boid_afb1f7620a7d477a8fc07639f27c8f5cd}} 
+{\bfseries force}
+\item 
+\mbox{\Hypertarget{classboid_1_1Boid_aeb924ddcfbbcfaabe632a36f4400236d}\label{classboid_1_1Boid_aeb924ddcfbbcfaabe632a36f4400236d}} 
+{\bfseries ang\+\_\+mom}
+\item 
+\mbox{\Hypertarget{classboid_1_1Boid_a3d7ae0272a89bf0b783502afb424f77a}\label{classboid_1_1Boid_a3d7ae0272a89bf0b783502afb424f77a}} 
+{\bfseries energy}
+\item 
+\mbox{\Hypertarget{classboid_1_1Boid_af4acd96ff87a317d898cfc592282beb0}\label{classboid_1_1Boid_af4acd96ff87a317d898cfc592282beb0}} 
+{\bfseries fly}
+\item 
+\mbox{\Hypertarget{classboid_1_1Boid_a3fad1ca335aeef9d44a2c7cdc5fa1664}\label{classboid_1_1Boid_a3fad1ca335aeef9d44a2c7cdc5fa1664}} 
+{\bfseries obj\+\_\+nearby}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}This is the main boid object.\end{DoxyVerb}
+ 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classboid_1_1Boid_ab119eb2dfe1a5b2843929992af496051}\label{classboid_1_1Boid_ab119eb2dfe1a5b2843929992af496051}} 
+\index{boid\+::\+Boid@{boid\+::\+Boid}!\+\_\+\+\_\+repr\+\_\+\+\_\+@{\+\_\+\+\_\+repr\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+repr\+\_\+\+\_\+@{\+\_\+\+\_\+repr\+\_\+\+\_\+}!boid\+::\+Boid@{boid\+::\+Boid}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+repr\+\_\+\+\_\+()}{\_\_repr\_\_()}}
+{\footnotesize\ttfamily def boid.\+Boid.\+\_\+\+\_\+repr\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Function to get a string of the boid. Boid position, velocity and color is displayed here.\end{DoxyVerb}
+ \mbox{\Hypertarget{classboid_1_1Boid_a6e4936558af1adad15340cf6ad4be290}\label{classboid_1_1Boid_a6e4936558af1adad15340cf6ad4be290}} 
+\index{boid\+::\+Boid@{boid\+::\+Boid}!attraction@{attraction}}
+\index{attraction@{attraction}!boid\+::\+Boid@{boid\+::\+Boid}}
+\subsubsection{\texorpdfstring{attraction()}{attraction()}}
+{\footnotesize\ttfamily def boid.\+Boid.\+attraction (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{attractors }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This takes a list of nearby boids or attractors and determine how much boid should move to be with the group.\end{DoxyVerb}
+ \mbox{\Hypertarget{classboid_1_1Boid_af194aa87a6828aa7582431fdf074627b}\label{classboid_1_1Boid_af194aa87a6828aa7582431fdf074627b}} 
+\index{boid\+::\+Boid@{boid\+::\+Boid}!average\+\_\+position@{average\+\_\+position}}
+\index{average\+\_\+position@{average\+\_\+position}!boid\+::\+Boid@{boid\+::\+Boid}}
+\subsubsection{\texorpdfstring{average\+\_\+position()}{average\_position()}}
+{\footnotesize\ttfamily def boid.\+Boid.\+average\+\_\+position (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}determine average position of all the boids in its neighbours\end{DoxyVerb}
+ \mbox{\Hypertarget{classboid_1_1Boid_af3bebad17918fa7e106e50cc6f300209}\label{classboid_1_1Boid_af3bebad17918fa7e106e50cc6f300209}} 
+\index{boid\+::\+Boid@{boid\+::\+Boid}!average\+\_\+velocity@{average\+\_\+velocity}}
+\index{average\+\_\+velocity@{average\+\_\+velocity}!boid\+::\+Boid@{boid\+::\+Boid}}
+\subsubsection{\texorpdfstring{average\+\_\+velocity()}{average\_velocity()}}
+{\footnotesize\ttfamily def boid.\+Boid.\+average\+\_\+velocity (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Determine average velocity of all the boids in its neighbour\end{DoxyVerb}
+ \mbox{\Hypertarget{classboid_1_1Boid_a5abaa756b7a6faf040d06f5c9a2f5dff}\label{classboid_1_1Boid_a5abaa756b7a6faf040d06f5c9a2f5dff}} 
+\index{boid\+::\+Boid@{boid\+::\+Boid}!avoid\+\_\+collisions@{avoid\+\_\+collisions}}
+\index{avoid\+\_\+collisions@{avoid\+\_\+collisions}!boid\+::\+Boid@{boid\+::\+Boid}}
+\subsubsection{\texorpdfstring{avoid\+\_\+collisions()}{avoid\_collisions()}}
+{\footnotesize\ttfamily def boid.\+Boid.\+avoid\+\_\+collisions (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{objs,  }\item[{}]{collision\+\_\+distance }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This takes list of objects nearby it and determines how much boid should change direction to avoid collission with them.\end{DoxyVerb}
+ \mbox{\Hypertarget{classboid_1_1Boid_af50918fec659eb35307d69253ae89fe0}\label{classboid_1_1Boid_af50918fec659eb35307d69253ae89fe0}} 
+\index{boid\+::\+Boid@{boid\+::\+Boid}!determine\+\_\+nearby\+\_\+boids@{determine\+\_\+nearby\+\_\+boids}}
+\index{determine\+\_\+nearby\+\_\+boids@{determine\+\_\+nearby\+\_\+boids}!boid\+::\+Boid@{boid\+::\+Boid}}
+\subsubsection{\texorpdfstring{determine\+\_\+nearby\+\_\+boids()}{determine\_nearby\_boids()}}
+{\footnotesize\ttfamily def boid.\+Boid.\+determine\+\_\+nearby\+\_\+boids (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{all\+\_\+boids }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function takes a list of boids as input update neighbours list of boids. It also takes field of view into consideration.\end{DoxyVerb}
+ \mbox{\Hypertarget{classboid_1_1Boid_aa9dc9d7da55ba1d25a58b71bb44f6c66}\label{classboid_1_1Boid_aa9dc9d7da55ba1d25a58b71bb44f6c66}} 
+\index{boid\+::\+Boid@{boid\+::\+Boid}!know\+\_\+bound@{know\+\_\+bound}}
+\index{know\+\_\+bound@{know\+\_\+bound}!boid\+::\+Boid@{boid\+::\+Boid}}
+\subsubsection{\texorpdfstring{know\+\_\+bound()}{know\_bound()}}
+{\footnotesize\ttfamily def boid.\+Boid.\+know\+\_\+bound (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This function gives the change in direction due to boundary behind which it could not go.\end{DoxyVerb}
+ \mbox{\Hypertarget{classboid_1_1Boid_a4bf32244bda6419e04158e1b724b9b7e}\label{classboid_1_1Boid_a4bf32244bda6419e04158e1b724b9b7e}} 
+\index{boid\+::\+Boid@{boid\+::\+Boid}!nearby\+\_\+obj@{nearby\+\_\+obj}}
+\index{nearby\+\_\+obj@{nearby\+\_\+obj}!boid\+::\+Boid@{boid\+::\+Boid}}
+\subsubsection{\texorpdfstring{nearby\+\_\+obj()}{nearby\_obj()}}
+{\footnotesize\ttfamily def boid.\+Boid.\+nearby\+\_\+obj (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{objs,  }\item[{}]{\+\_\+\+M\+I\+N\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}It takes a list of predators and a safe distance from it and update the list of nearby objects in it.\end{DoxyVerb}
+ \mbox{\Hypertarget{classboid_1_1Boid_a8785ce00989f8a785bac850dc2455471}\label{classboid_1_1Boid_a8785ce00989f8a785bac850dc2455471}} 
+\index{boid\+::\+Boid@{boid\+::\+Boid}!update@{update}}
+\index{update@{update}!boid\+::\+Boid@{boid\+::\+Boid}}
+\subsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily def boid.\+Boid.\+update (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{delta,  }\item[{}]{all\+\_\+boids,  }\item[{}]{attractors,  }\item[{}]{obstacles }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This is main function which figures out all the conditions and determine resultant change in the boid location per cycle. It calls all the function given above and find resultant change in location and applies it to the boid.\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+boid.\+py\end{DoxyCompactItemize}

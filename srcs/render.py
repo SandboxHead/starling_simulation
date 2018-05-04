@@ -2,19 +2,22 @@ from pyglet.gl import *
 from pyglet.window import key
 import math, random, vector
 from boid import Boid
+import sys
 
 
 class Model:
+	"""This class is model of the display. This contain all the elements displayed on display and updates the location of the boids."""
 	def create_boid(self,length, width, height):
 		return Boid(position=[random.uniform(-length, length),random.uniform(-width, width),random.uniform(-height-10, 0)],
 					velocity=[random.uniform(-25000,25000),random.uniform(-2500,2500),random.uniform(-25000,25000)],
 					color=[0,0,0])
 
-	def __init__(self):
+	def __init__(self, n):
+		"""This constructor makes complete view of the display. It makes all the boids and give them shape."""
 		self.batch = pyglet.graphics.Batch()
 		self.objs = []
 		self.boids = []
-		for n in range(200):
+		for n in range(int(n)):
 			self.boids.append(self.create_boid(200,50,200))
 
 		for boid in self.boids:
@@ -43,6 +46,7 @@ class Model:
 		for ind in range(start, stop):
 			self.boids[ind].update(0.0003, self.boids, [],[])
 	def draw(self):
+		"""This function is displaying all the elements constructor has made so far. It also changes the location of the boids with time making it look like motion."""
 		# for n in range(0, len(self.boids), 100):
 		# 	stop = n+100 if n +100 <= len(self.boids) else len(self.boids)
 		# 	p = multiprocessing.Process(target = self.update_boid, args = (n, stop))
@@ -73,11 +77,13 @@ class Model:
 		self.batch.draw()
 
 class Player:
+	"""This is the player of the display. In other view, point of view. It is responsible for interactive working of the display. Player moves or change point of refernce to make it look like translation."""
 	def __init__(self):
 		self.pos = [0,0,50]
 		self.rot = [0,0]
 
 	def mouse_motion(self, dx, dy):
+		"""This function map mouse with rotating environment. Whenever we move mouse in its mode, it it move the environment and make it look like player has rotated."""
 		dx/=8
 		dy/=8
 		self.rot[0]+=dy
@@ -88,6 +94,7 @@ class Player:
 		# if self.rot[1]<-90 : self.rot[1] = -90
 
 	def update(self, dt, keys):
+		"""This function use keyboard key to move the player from one place to another."""
 		s = dt*10
 		rotY = -self.rot[1]/180*math.pi
 		dx, dz = math.sin(rotY), math.cos(rotY)
@@ -99,6 +106,7 @@ class Player:
 		if keys[key.LSHIFT]: self.pos[1]-=s
 
 class Window(pyglet.window.Window):
+	"""Main display object which organize player and boids in it."""
 	def Projection(self): glMatrixMode(GL_PROJECTION); glLoadIdentity()
 	def Model(self): glMatrixMode(GL_MODELVIEW); glLoadIdentity()
 
@@ -134,6 +142,7 @@ class Window(pyglet.window.Window):
 
 	
 	def __init__(self, *args, **kwargs):
+		"""Constructor of the main display. It takes all the necessary arguments and create the display. It adds model and player into display."""
 		super().__init__(*args, **kwargs)
 		self.set_minimum_size(200, 200)
 		self.keys = key.KeyStateHandler()
@@ -142,9 +151,10 @@ class Window(pyglet.window.Window):
 		# self.boids = []
 		# # for n in range(3000):
 		# # 	self.boids.append(self.create_boid(5,5,5))
-		self.model = Model()
+		self.model = Model(sys.argv[1])
 		self.player = Player()
 	def on_draw(self):
+		"""This function determines all the drawing which occurs in the display. It uses Model draw funtion to display all the boids onto the screen."""
 		self.set3d()
 		self.clear()
 		self.push(self.player.pos, self.player.rot)	
@@ -156,7 +166,7 @@ class Window(pyglet.window.Window):
 		glPopMatrix()
 
 def run():
-	window = Window( width=1900, height=1000, caption = "Minecraft", resizable=True)
+	window = Window( width=1900, height=1000, caption = "Flocking Simulation", resizable=True)
 	glClearColor(0.5,0.7,1,1)
 	glEnable(GL_DEPTH_TEST)
 	# ps = []
@@ -167,7 +177,7 @@ def run():
 
 
 if __name__ == '__main__':
-	window = Window( width=1900, height=1000, caption = "Minecraft", resizable=True)
+	window = Window( width=1900, height=1000, caption = "Flocking Simulation", resizable=True)
 	glClearColor(0.5,0.7,1,1)
 	glEnable(GL_DEPTH_TEST)
 	# ps = []
