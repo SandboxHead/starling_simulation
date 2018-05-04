@@ -2,13 +2,12 @@ from pyglet.gl import *
 from pyglet.window import key
 import math, random, vector
 from boid import Boid
-import multiprocessing
 
 
 class Model:
 	def create_boid(self,length, width, height):
 		return Boid(position=[random.uniform(-length, length),random.uniform(-width, width),random.uniform(-height-10, 0)],
-					velocity=[random.uniform(-25000,30000),random.uniform(-100,100),random.uniform(-25000,30000)],
+					velocity=[random.uniform(-25000,25000),random.uniform(-2500,2500),random.uniform(-25000,25000)],
 					color=[0,0,0])
 
 	def __init__(self):
@@ -48,6 +47,9 @@ class Model:
 		# 	stop = n+100 if n +100 <= len(self.boids) else len(self.boids)
 		# 	p = multiprocessing.Process(target = self.update_boid, args = (n, stop))
 		# 	p.start()
+		force = 0
+		ang_mom = 0
+		energy = 0
 		for boid in self.boids:
 			boid.update(0.0003, self.boids, [],[])
 		for num in range(len(self.boids)):
@@ -55,6 +57,10 @@ class Model:
 			obj1 = self.objs[num*3+1]
 			obj2 = self.objs[num*3+2]
 			boid = self.boids[num]
+			force =force + self.boids[num].force
+			ang_mom = ang_mom + self.boids[num].ang_mom
+			energy = energy + self.boids[num].energy
+			
 			x, y, z = boid.position
 			p = vector.bird_orient(boid.fly, boid.velocity, boid.position, [20, 10, 3])
 			boid.fly = -1*boid.fly
@@ -63,12 +69,12 @@ class Model:
 			obj1.vertices = [p[0][0]/30,p[0][1]/30,p[0][2]/30,p[1][0]/30,p[1][1]/30,p[1][2]/30,p[4][0]/30,p[4][1]/30,p[4][2]/30]
 			obj2.vertices = [p[0][0]/30,p[0][1]/30,p[0][2]/30,p[1][0]/30,p[1][1]/30,p[1][2]/30,p[3][0]/30,p[3][1]/30,p[3][2]/30]
 
-			# print(obj.vertices)
+		print (force/200, ang_mom/200, energy/200)
 		self.batch.draw()
 
 class Player:
 	def __init__(self):
-		self.pos = [0,0,20]
+		self.pos = [0,0,50]
 		self.rot = [0,0]
 
 	def mouse_motion(self, dx, dy):

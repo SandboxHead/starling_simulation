@@ -27,7 +27,7 @@ _FACTOR_BOUND = 0.0008
 class Boid:
 	def __init__(self,
 				position=[100.0, 100.0, 100.0],
-				bounds=[200, 10, 200],
+				bounds=[200, 5, 200],
 				velocity=[0.0, 0.0, 0.0],
 				color=[0.0, 0.0, 0.0],
 				neighbours=[],
@@ -45,6 +45,11 @@ class Boid:
 			self.velocity = velocity
 			self.color = color
 			self.force_factors = []
+			self.dt = 1
+			self.mass = 0.1
+			self.force = 0
+			self.ang_mom = 0
+			self.energy = 0
 			if fly==0:
 				self.fly = -1
 			else:
@@ -109,7 +114,7 @@ class Boid:
 
 			average_x, average_y, average_z = (sum_x1/len(self.neighbours), sum_y1/len(self.neighbours), sum_z1/len(self.neighbours))
 			out.append([average_x-self.position[0], average_y-self.position[1], average_z-self.position[2]])
-			out.append(vector.limit_magnitude(c, _COLLISION_VELOCITY_MAX))
+			out.append(vector.limit_magnitude(c, _COLLISION_VELOCITY_MAX,True))
 			return out
 		else:
 			return [[0.0,0.0,0.0],[0.0,0.0,0.0],[0.0,0.0,0.0]]
@@ -218,17 +223,23 @@ class Boid:
 			self.velocity[1] += x[0] *x[1][1]*0.2
 			self.velocity[2] += x[0] *x[1][2]
 
-		self.velocity = vector.limit_magnitude(self.velocity, _SPEED_MAX, _SPEED_MIN, True)
+		velocity2 = vector.limit_magnitude(self.velocity, _SPEED_MAX, _SPEED_MIN, True)
 
 		#changing the boids position in accordance with velocity.
 		for i in range(0, len(self.position)):
-			self.position[i] += delta*self.velocity[i]
+			self.position[i] += delta*velocity2[i]
 			# if (self.position[i] > self.bound[i]) or (self.position[i]< -self.bound[i]):
 			# 	self.position[i] = -self.position[i]
 
 		# for i in range(3):
 		# 	if (self.position[i] > self.bound[i]) or (self.position[i]< -self.bound[i]):
 		# 		self.position = vector.limit_magnitude(self.position, self.bound[i], -self.bound[i], True)				
+
+		self.force = self.mass*vector.magnitude(self.velocity[0]-velocity2[0],self.velocity[1]-velocity2[1],self.velocity[2]-velocity2[2])/(self.dt*50)
+		self.velocity = velocity2
+		cross = vector.cross(self.velocity, self.position)
+		self.ang_mom = self.mass*vector.magnitude(cross[0],cross[1],cross[2])/1000
+		self.energy = self.mass*(vector.magnitude(self.velocity[0],self.velocity[1],self.velocity[2])**2)/4000000
 
 def velocity_print(a):
 	print (a.velocity[0], a.velocity[1], a.velocity[2])

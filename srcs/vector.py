@@ -13,7 +13,13 @@ def dot(a, b):
 def dot2(a, b):
 	return (a[0]*b[0]+a[2]*b[2])
 
+def cross(a, b):
+    c = [a[1]*b[2] - a[2]*b[1],
+         a[2]*b[0] - a[0]*b[2],
+         a[0]*b[1] - a[1]*b[0]]
 
+    return c
+    
 def angle_between(a, b):
 	try:
 		angle = math.degrees(math.acos(dot2(a, b) / (magnitude2(*a) * magnitude2(*b))))
